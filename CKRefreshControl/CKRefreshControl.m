@@ -47,6 +47,40 @@ typedef enum {
     CGFloat originalTopContentInset;
 }
 
++ (id)appearance {
+    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    if (uiRefreshControlClass) {
+        return [UIRefreshControl appearance];
+    }
+    else {
+        return [super appearance];
+    }
+}
+
++ (id)appearanceWhenContainedIn:(Class<UIAppearanceContainer>)ContainerClass, ... {
+    
+    va_list list;
+    va_start(list, ContainerClass);
+    
+    Class classes[10] = {0};
+    
+    for (int i=0; i<10; ++i) {
+        Class c = va_arg(list, Class);
+        if (c == Nil) {
+            break;
+        }
+        classes[i] = c;
+    }
+    va_end(list);
+    
+    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    if (uiRefreshControlClass) {
+        return [UIRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
+    } else {
+        return [super appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
+    }
+}
+
 - (id)init
 {
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
