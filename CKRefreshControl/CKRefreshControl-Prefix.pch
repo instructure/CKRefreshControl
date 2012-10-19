@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'CKRefreshControl' target in the 'CKRefreshControl' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
