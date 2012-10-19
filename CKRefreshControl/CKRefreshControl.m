@@ -163,7 +163,6 @@ typedef enum {
         case CKRefreshControlStateRefreshing:
             self.alpha = 1.0;
             [UIView animateWithDuration:0.2 animations:^{
-                textLabel.alpha = 0.0;
                 arrow.alpha = 0.0;
             }];
             break;
