@@ -13,6 +13,7 @@
 		B70037291631D51B00FA173A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B70037271631D51B00FA173A /* MainStoryboard.storyboard */; };
 		B70037441631D57200FA173A /* libCKRefreshControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B70037341631D55200FA173A /* libCKRefreshControl.a */; };
 		B70037491631D67200FA173A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B70037481631D67200FA173A /* QuartzCore.framework */; };
+		B700374C1635A5BF00FA173A /* AppearanceCustomizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B700374B1635A5BF00FA173A /* AppearanceCustomizationController.m */; };
 		B71611611631D4DA00B08595 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71611601631D4DA00B08595 /* UIKit.framework */; };
 		B71611631631D4DA00B08595 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71611621631D4DA00B08595 /* Foundation.framework */; };
 		B71611651631D4DA00B08595 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71611641631D4DA00B08595 /* CoreGraphics.framework */; };
@@ -51,6 +52,8 @@
 		B70037281631D51B00FA173A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		B700372F1631D55100FA173A /* CKRefreshControl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CKRefreshControl.xcodeproj; sourceTree = "<group>"; };
 		B70037481631D67200FA173A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B700374A1635A5BF00FA173A /* AppearanceCustomizationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppearanceCustomizationController.h; sourceTree = "<group>"; };
+		B700374B1635A5BF00FA173A /* AppearanceCustomizationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppearanceCustomizationController.m; sourceTree = "<group>"; };
 		B716115C1631D4DA00B08595 /* RefreshControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RefreshControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71611601631D4DA00B08595 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B71611621631D4DA00B08595 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -131,6 +134,8 @@
 				B70037201631D51700FA173A /* DefaultRefreshController.m */,
 				B70037211631D51700FA173A /* TextRefreshingController.h */,
 				B70037221631D51700FA173A /* TextRefreshingController.m */,
+				B700374A1635A5BF00FA173A /* AppearanceCustomizationController.h */,
+				B700374B1635A5BF00FA173A /* AppearanceCustomizationController.m */,
 				B71611671631D4DA00B08595 /* Supporting Files */,
 			);
 			path = RefreshControlDemo;
@@ -238,6 +243,7 @@
 				B70037231631D51700FA173A /* ColorRefreshController.m in Sources */,
 				B70037241631D51700FA173A /* DefaultRefreshController.m in Sources */,
 				B70037251631D51700FA173A /* TextRefreshingController.m in Sources */,
+				B700374C1635A5BF00FA173A /* AppearanceCustomizationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,4 +1,4 @@
-// TextRefreshingController.m
+// AppearanceCustomizationController.m
 //
 // Copyright (c) 2012 Instructure, Inc.
 //
@@ -20,21 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextRefreshingController.h"
+#import "AppearanceCustomizationController.h"
 #import "CKRefreshControl.h"
 
-@interface TextRefreshingController ()
-
-@end
-
-@implementation TextRefreshingController
+@implementation AppearanceCustomizationController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     CKRefreshControl *refreshControl = [CKRefreshControl new];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"This is a test"];
     [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = (id)refreshControl;
 }
@@ -62,9 +57,6 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
-    cell.textLabel.text = @"With text!";
     
     return cell;
 }

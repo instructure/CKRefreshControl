@@ -18,6 +18,7 @@
                         <segue destination="tNl-ES-ufn" kind="relationship" relationship="viewControllers" id="wwd-qf-dUi"/>
                         <segue destination="Fyl-bi-8BV" kind="relationship" relationship="viewControllers" id="P2j-2K-CdO"/>
                         <segue destination="GMm-DO-Xu7" kind="relationship" relationship="viewControllers" id="noU-cI-S2t"/>
+                        <segue destination="ZZ1-HQ-HER" kind="relationship" relationship="viewControllers" id="h10-wF-wBV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
@@ -135,8 +136,48 @@
             </objects>
             <point key="canvasLocation" x="697" y="871"/>
         </scene>
+        <!--Appearance Customization Controller - +appearance-->
+        <scene sceneID="Lkd-u4-BV8">
+            <objects>
+                <tableViewController id="ZZ1-HQ-HER" customClass="AppearanceCustomizationController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="THn-IN-g1M">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="aHT-bI-bOk" style="IBUITableViewCellStyleDefault" id="1vP-EI-Zdd">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="+appearance customization" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHT-bI-bOk">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ZZ1-HQ-HER" id="hyc-Bf-Jds"/>
+                            <outlet property="delegate" destination="ZZ1-HQ-HER" id="CsU-xA-nuq"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="+appearance" id="WMJ-i5-frn"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MsX-yL-GG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1074" y="871"/>
+        </scene>
     </scenes>
     <classes>
+        <class className="AppearanceCustomizationController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AppearanceCustomizationController.h"/>
+        </class>
         <class className="ColorRefreshController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ColorRefreshController.h"/>
         </class>

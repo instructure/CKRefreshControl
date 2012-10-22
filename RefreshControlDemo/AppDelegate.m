@@ -21,11 +21,15 @@
 // THE SOFTWARE.
 
 #import "AppDelegate.h"
+#import "CKRefreshControl.h"
+#import "AppearanceCustomizationController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[CKRefreshControl appearanceWhenContainedIn:[AppearanceCustomizationController class], [UITabBarController class], nil] setTintColor:[UIColor greenColor]];
+    
     // Override point for customization after application launch.
     return YES;
 }
