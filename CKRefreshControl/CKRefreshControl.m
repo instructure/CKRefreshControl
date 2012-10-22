@@ -127,6 +127,9 @@ typedef enum {
 }
 
 - (void)setTintColor:(UIColor *)tintColor {
+    if (tintColor == nil) {
+        tintColor = [UIColor colorWithWhite:0.5 alpha:1];
+    }
     textLabel.textColor = tintColor;
     arrow.tintColor = tintColor;
     spinner.color = tintColor;

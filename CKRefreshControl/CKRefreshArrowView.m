@@ -40,7 +40,7 @@
 }
 
 static void commonSetup(CKRefreshArrowView *self) {
-    self.tintColor = [UIColor grayColor];
+    self.tintColor = [UIColor colorWithWhite:0.5 alpha:1];
     self.backgroundColor = [UIColor clearColor];
     
     self->range = (M_PI * 1.5);
@@ -65,6 +65,9 @@ static void commonSetup(CKRefreshArrowView *self) {
 
 
 - (void)setTintColor:(UIColor *)tintColor {
+    if (tintColor == nil) {
+        tintColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+    }
     _tintColor = tintColor;
     [self calculateGlowColor];
     [self setNeedsDisplay];

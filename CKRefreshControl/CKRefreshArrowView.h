@@ -25,6 +25,6 @@
 @interface CKRefreshArrowView : UIView
 
 @property (nonatomic) CGFloat progress;
-@property (nonatomic) UIColor *tintColor;
+@property (nonatomic) UIColor *tintColor; // default = 0.5 gray, 1.0 alpha
 
 @end
