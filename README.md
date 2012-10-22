@@ -10,7 +10,7 @@ Using it is as simple as this:
     [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
     controller.refreshControl = (id)refreshControl;
 
-![iOS 5 example](/instructure/CKRefreshControl/raw/readme-resources/iOS5.png)
+![iOS 5 example](/instructure/CKRefreshControl/raw/readme-resources/iOS5.png) &nbsp; 
 ![iOS 6 example](/instructure/CKRefreshControl/raw/readme-resources/iOS6.png)
 
 ----
