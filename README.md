@@ -10,6 +10,9 @@ Using it is as simple as this:
     [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
     controller.refreshControl = (id)refreshControl;
 
+![iOS 5 example](/instructure/CKRefreshControl/raw/readme-resources/iOS5.png)
+![iOS 6 example](/instructure/CKRefreshControl/raw/readme-resources/iOS6.png)
+
 ----
 
 ### API Compatible
@@ -28,7 +31,13 @@ There is only one minor inconvenience. The -[UITableViewController setRefreshCon
 
 CKRefreshControl intentionally does not mimic the iOS 6 UIRefreshControl look and feel. Instead, it was designed to look more like the other pull-to-refresh controls commonly used in iOS 5 apps. Thus, whether the user is running iOS 5 or iOS 6, they get an interface that fits in with other apps on the device.
 
-Despite the difference in interface between iOS 5 and iOS 6, CKRefreshControl supports all the same properties as UIRefreshControl.
+Despite the difference in interface between iOS 5 and iOS 6, CKRefreshControl supports the  same properties UIRefreshControl does.
+
+---
+
+### Why the name?
+
+CKRefreshControl was originally part of our internal "CanvasKit" library, used in building Instructure's iOS apps. 
 
 ---
 
