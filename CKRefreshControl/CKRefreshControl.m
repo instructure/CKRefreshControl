@@ -342,7 +342,7 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
         return uiRefreshControlClass;
     }
     else {
-        return NSClassFromString(@"CKRefreshControl");
+        return [super class];
     }
 }
 
