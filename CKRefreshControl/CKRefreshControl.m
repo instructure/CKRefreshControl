@@ -255,15 +255,7 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     
     // Reposition ourself in the scrollview
     if ([superview isKindOfClass:[UIScrollView class]]) {
-        CGRect scrollBounds = superview.bounds;
-        CGFloat height = self.bounds.size.height;
-        CGRect newFrame = (CGRect){
-            .origin.x = 0,
-            .origin.y = -height,
-            .size.width = scrollBounds.size.width,
-            .size.height = height
-        };
-        self.frame = newFrame;
+        [self repositionAboveContent];
         
         [superview addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionOld context:contentOffsetObservingKey];
         
@@ -276,6 +268,18 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
             tableViewController.refreshControl = (id)self;
         }
     }
+}
+
+- (void)repositionAboveContent {
+    CGRect scrollBounds = self.superview.bounds;
+    CGFloat height = self.bounds.size.height;
+    CGRect newFrame = (CGRect){
+        .origin.x = 0,
+        .origin.y = -height,
+        .size.width = scrollBounds.size.width,
+        .size.height = height
+    };
+    self.frame = newFrame;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -325,6 +329,18 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     }
     else {
         self.refreshControlState = CKRefreshControlStateHidden;
+    }
+    
+    if (pullHeight > self.bounds.size.height) {
+        // Center in the rubberbanding area
+        CGPoint rubberBandCenter = (CGPoint) {
+            .x = CGRectGetMidX(self.superview.bounds),
+            .y = scrollview.contentOffset.y / 2.0
+        };
+        self.center = rubberBandCenter;
+    }
+    else {
+        [self repositionAboveContent];
     }
 }
 
