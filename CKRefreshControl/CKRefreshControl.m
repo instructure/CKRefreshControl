@@ -47,6 +47,8 @@ typedef enum {
     CGFloat originalTopContentInset;
 }
 
+// If UIRefreshControl is available, we need to customize that class, not
+// CKRefreshControl. Otherwise, the +appearance proxy is broken on iOS 6.
 + (id)appearance {
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
     if (uiRefreshControlClass) {
@@ -78,6 +80,19 @@ typedef enum {
         return [UIRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
     } else {
         return [super appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
+    }
+}
+
+// This is overridden so that things like
+//    [control isKindOfClass:[CKRefreshControl class]]
+// will work on both iOS 5 and iOS 6.
++ (Class)class {
+    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    if (uiRefreshControlClass) {
+        return uiRefreshControlClass;
+    }
+    else {
+        return NSClassFromString(@"CKRefreshControl");
     }
 }
 
