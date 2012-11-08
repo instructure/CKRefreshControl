@@ -45,6 +45,7 @@ typedef enum {
     UIActivityIndicatorView *spinner;
     CKRefreshArrowView *arrow;
     CGFloat originalTopContentInset;
+    CGFloat decelerationStartOffset;
 }
 
 - (id)init
@@ -257,12 +258,27 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
         arrow.progress = 0.0;
     }
     
+    
+    // Track when deceleration starts
+    if (scrollview.isDecelerating == NO) {
+        decelerationStartOffset = 0;
+    }
+    else if (scrollview.isDecelerating && decelerationStartOffset == 0) {
+        decelerationStartOffset = scrollview.contentOffset.y;
+    }
+
+    
     // Transition to the next state
     if (self.refreshControlState == CKRefreshControlStateRefreshing) {
         // No state transitions necessary
     }
+    else if (decelerationStartOffset > 0) {
+        // Deceleration started before reaching the header 'rubber band' area; hide the refresh control
+        self.refreshControlState = CKRefreshControlStateHidden;
+    }
     else if (pullHeight >= triggerHeight || (pullHeight > 0 && previousPullHeight >= triggerHeight)) {
-        if (scrollview.isDecelerating == NO) {
+
+        if (scrollview.isDragging) {
             // Just waiting for them to let go, then we'll refresh
             self.refreshControlState = CKRefreshControlStateReady;
         }
