@@ -166,9 +166,13 @@ typedef enum {
             
         case CKRefreshControlStateRefreshing:
             self.alpha = 1.0;
-            [UIView animateWithDuration:0.2 animations:^{
-                arrow.alpha = 0.0;
-            }];
+            [UIView animateWithDuration: 0.2
+                             animations:^{
+                                 arrow.alpha = 0.0;
+                             }
+                             completion:^(BOOL finished) {
+                                 [spinner startAnimating];
+                             }];
             break;
     };
     
@@ -177,7 +181,6 @@ typedef enum {
     UIEdgeInsets contentInset = UIEdgeInsetsMake(originalTopContentInset, 0, 0, 0);
     if (refreshControlState == CKRefreshControlStateRefreshing) {
         contentInset = UIEdgeInsetsMake(self.frame.size.height + originalTopContentInset, 0, 0, 0);
-        [spinner startAnimating];
     }
     else {
         [spinner stopAnimating];
