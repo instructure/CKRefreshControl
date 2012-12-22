@@ -8,22 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B71610F61631C4EB00B08595 /* CKRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B71610F51631C4EB00B08595 /* CKRefreshControl.m */; };
-		B71610F71631C4F400B08595 /* CKRefreshControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B71610F41631C4EB00B08595 /* CKRefreshControl.h */; };
+		B71610F71631C4F400B08595 /* CKRefreshControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B71610F41631C4EB00B08595 /* CKRefreshControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B71610FA1631C54E00B08595 /* CKRefreshArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B71610F91631C54E00B08595 /* CKRefreshArrowView.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B71610E11631C4BC00B08595 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = include;
-			dstSubfolderSpec = 16;
-			files = (
-				B71610F71631C4F400B08595 /* CKRefreshControl.h in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B71610E31631C4BC00B08595 /* libCKRefreshControl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCKRefreshControl.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,14 +70,25 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		58AD3FC016864CA0006C2265 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B71610F71631C4F400B08595 /* CKRefreshControl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		B71610E21631C4BC00B08595 /* CKRefreshControl */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B71610F11631C4BC00B08595 /* Build configuration list for PBXNativeTarget "CKRefreshControl" */;
 			buildPhases = (
+				58AD3FC016864CA0006C2265 /* Headers */,
 				B71610DF1631C4BC00B08595 /* Sources */,
 				B71610E01631C4BC00B08595 /* Frameworks */,
-				B71610E11631C4BC00B08595 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -193,8 +191,10 @@
 				DSTROOT = /tmp/CKRefreshControl.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CKRefreshControl/CKRefreshControl-Prefix.pch";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -205,8 +205,10 @@
 				DSTROOT = /tmp/CKRefreshControl.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CKRefreshControl/CKRefreshControl-Prefix.pch";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
