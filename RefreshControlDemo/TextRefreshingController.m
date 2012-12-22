@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "TextRefreshingController.h"
-#import "CKRefreshControl.h"
+#import <CKRefreshControl/CKRefreshControl.h>
 
 @interface TextRefreshingController ()
 

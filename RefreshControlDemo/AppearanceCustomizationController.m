@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "AppearanceCustomizationController.h"
-#import "CKRefreshControl.h"
+#import <CKRefreshControl/CKRefreshControl.h>
 
 @implementation AppearanceCustomizationController
 
