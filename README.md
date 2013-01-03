@@ -4,11 +4,15 @@ Open source 100% API-compatible replacement for `UIRefreshControl`, supporting i
 
 Using it is as simple as this:
 
+    #import <CKRefreshControl/CKRefreshControl.h>
+
     UITableViewController *controller;
 
     CKRefreshControl *refreshControl = [CKRefreshControl new];
     [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
     controller.refreshControl = (id)refreshControl;
+
+Then just link against the static library the `CKRefreshControl` project provides, and you're ready to go.
 
 ![iOS 5 example](/instructure/CKRefreshControl/raw/readme-resources/iOS5.png) &nbsp; 
 ![iOS 6 example](/instructure/CKRefreshControl/raw/readme-resources/iOS6.png)

@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "DefaultRefreshController.h"
-#import "CKRefreshControl.h"
+#import <CKRefreshControl/CKRefreshControl.h>
 
 @implementation DefaultRefreshController
 

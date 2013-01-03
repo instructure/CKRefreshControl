@@ -21,8 +21,8 @@
 // THE SOFTWARE.
 
 #import "AppDelegate.h"
-#import "CKRefreshControl.h"
 #import "AppearanceCustomizationController.h"
+#import <CKRefreshControl/CKRefreshControl.h>
 
 @implementation AppDelegate
 

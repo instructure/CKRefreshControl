@@ -16,7 +16,7 @@
 		B71610E11631C4BC00B08595 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = include;
+			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
 				B71610F71631C4F400B08595 /* CKRefreshControl.h in CopyFiles */,
