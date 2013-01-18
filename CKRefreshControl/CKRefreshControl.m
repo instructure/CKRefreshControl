@@ -28,6 +28,28 @@
 #error Add -fobjc-arc to the compile flags for CKRefreshControl.m
 #endif
 
+typedef IMP *IMPPointer;
+
+BOOL class_swizzleMethodAndStore(Class class, SEL original, IMP replacement, IMPPointer store)
+{
+    IMP imp = NULL;
+    Method method = class_getInstanceMethod(class, original);
+    
+    if (method)
+    {
+        const char *type = method_getTypeEncoding(method);
+        imp = class_replaceMethod(class, original, replacement, type);
+        
+        if (!imp)
+            imp = method_getImplementation(method);
+    }
+    
+    if (imp && store)
+        *store = imp;
+    
+    return (imp != NULL);
+}
+
 typedef enum {
     CKRefreshControlStateHidden,
     CKRefreshControlStatePulling,
@@ -35,6 +57,7 @@ typedef enum {
     CKRefreshControlStateRefreshing
 } CKRefreshControlState;
 
+static BOOL _isMasquerading = NO;
 
 @interface CKRefreshControl ()
 @property (nonatomic) CKRefreshControlState refreshControlState;
@@ -51,7 +74,7 @@ typedef enum {
 - (id)init
 {
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
-    if (uiRefreshControlClass) {
+    if (uiRefreshControlClass && !_isMasquerading) {
         return [[uiRefreshControlClass alloc] init];
     }
     
@@ -65,6 +88,40 @@ typedef enum {
         [self setRefreshControlState:CKRefreshControlStateHidden];
     }
     return self;
+}
+
+- (id) initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(tableViewControllerDidSetView:)
+                                                     name: CKRefreshControl_UITableViewController_DidSetView_Notification
+                                                   object: nil                                                              ];
+
+        // Initialization code
+        self.frame = CGRectMake(0, 0, 320, 60);
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        self.backgroundColor = [UIColor clearColor];
+        [self populateSubviews];
+        [self setRefreshControlState:CKRefreshControlStateHidden];
+    }
+    return self;
+}
+
+- (void) tableViewControllerDidSetView: (NSNotification *) notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CKRefreshControl_UITableViewController_DidSetView_Notification object:nil];
+    UITableViewController *tableViewController = notification.object;
+    if (tableViewController.refreshControl != (id)self)
+        tableViewController.refreshControl = (id)self;
+}
+
+// remove notification observer in case notification never fired
+- (void) awakeFromNib
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CKRefreshControl_UITableViewController_DidSetView_Notification object:nil];
+    [super awakeFromNib];
 }
 
 - (void)populateSubviews {
@@ -373,9 +430,28 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 #endif
 
 static void *CKRefreshControlKey;
+
+NSString *const CKRefreshControl_UITableViewController_DidSetView_Notification = @"CKRefreshControl_UITableViewController_DidSetView";
+static void CKRefreshControl_UITableViewController_SetView(UITableViewController *dynamicSelf, SEL _cmd, UITableView *view);
+static void (*UITableViewController_SetViewIMP)(UITableViewController *dynamicSelf, SEL _cmd, UITableView *view);
+static void CKRefreshControl_UITableViewController_SetView(UITableViewController *dynamicSelf, SEL _cmd, UITableView *view)
+{
+    UITableViewController_SetViewIMP(dynamicSelf, _cmd, view);
+    [[NSNotificationCenter defaultCenter] postNotificationName:CKRefreshControl_UITableViewController_DidSetView_Notification object:dynamicSelf];
+}
+
 + (void)load {
     if ([UITableViewController instancesRespondToSelector:@selector(refreshControl)]) {
         return;
+    }
+
+    // CKRefreshControl will masquerade as UIRefreshControl
+    Class UIRefreshControl = NSClassFromString(@"UIRefreshControl");
+    if (!UIRefreshControl)
+    {
+        UIRefreshControl = objc_allocateClassPair([CKRefreshControl class], "UIRefreshControl", 0);
+        objc_registerClassPair(UIRefreshControl);
+        _isMasquerading = YES;
     }
     
     // Add UITableViewController.refreshControl if it isn't present
@@ -402,6 +478,14 @@ static void *CKRefreshControlKey;
     
     added = class_addMethod(tableViewController, @selector(setRefreshControl:), setRefreshControlIMP, "v@:@");
     NSAssert(added, @"We tried to add the setRefreshControl: method, and it failed. This is going to break things, so we may as well stop here.");
+
+    // swizzle setView: method so we can post notification to CKRefreshControl ...
+    // CKRefreshControl will assign itself to the UIViewController
+    class_swizzleMethodAndStore(tableViewController,
+                                @selector(setView:),
+                                (IMP)CKRefreshControl_UITableViewController_SetView,
+                                (IMP *)&UITableViewController_SetViewIMP            );
+    
 }
 
 
