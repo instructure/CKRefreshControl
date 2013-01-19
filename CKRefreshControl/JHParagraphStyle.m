@@ -27,7 +27,7 @@ static void *NSParagraphStyleKey;
 }
 
 // This is overridden so that things like
-//    [control isKindOfClass:[CKRefreshControl class]]
+//    [object isKindOfClass:[NSParagraphStyle class]]
 // will work on both iOS 5 and iOS 6.
 + (Class)class {
     Class nsParagraphStyleClass = NSClassFromString(@"NSParagraphStyle");
