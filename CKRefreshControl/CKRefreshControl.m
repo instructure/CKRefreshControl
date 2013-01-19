@@ -426,8 +426,8 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 
 + (void) initialize
 {
-    [JHParagraphStyle initialize];
     [super initialize];
+    [JHParagraphStyle initialize];
 }
 
 
@@ -490,7 +490,8 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
                                     @selector(setView:),
                                     (IMP)CKRefreshControl_UITableViewController_SetView,
                                     (IMP *)&UITableViewController_SetViewIMP            );
-    }); 
+    });
 }
 
 @end
+

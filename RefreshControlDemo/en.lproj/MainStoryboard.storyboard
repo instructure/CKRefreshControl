@@ -213,7 +213,7 @@
                             <fragment content="Attributed Title">
                                 <attributes>
                                     <font key="NSFont" metaFont="toolTip"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                 </attributes>
                             </fragment>
                         </attributedString>

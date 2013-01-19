@@ -58,4 +58,3 @@
 // This will be added to the class at runtime if not already available
 @property (nonatomic,retain) UIRefreshControl *refreshControl;
 @end
-

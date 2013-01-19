@@ -23,23 +23,32 @@ static void *NSParagraphStyleKey;
 
 - (id) initWithCoder: (NSCoder *) aDecoder
 {
-    if (self = [super init])
-    {
-        
+    return [super init];
+}
+
+// This is overridden so that things like
+//    [control isKindOfClass:[CKRefreshControl class]]
+// will work on both iOS 5 and iOS 6.
++ (Class)class {
+    Class nsParagraphStyleClass = NSClassFromString(@"NSParagraphStyle");
+    if (nsParagraphStyleClass) {
+        return nsParagraphStyleClass;
     }
-    return self;
+    else {
+        return [super class];
+    }
 }
 
 + (void) load
 {
-    if ([NSAttributedString instancesRespondToSelector:@selector(paragraphStyle)])
+    if ([NSAttributedString instancesRespondToSelector:@selector(size)])
         return;
     
     // CKRefreshControl will masquerade as UIRefreshControl
     static dispatch_once_t registerNSParagraphStyleClass_onceToken;
     dispatch_once(&registerNSParagraphStyleClass_onceToken, ^{
-        Class nsParagraphStyle = objc_allocateClassPair([self class], "NSParagraphStyle", 0);
-        objc_registerClassPair(nsParagraphStyle);
+        Class nsParagraphStyleClass = objc_allocateClassPair([self class], "NSParagraphStyle", 0);
+        objc_registerClassPair(nsParagraphStyleClass);
         _isMasquerading = YES;
         
         Class nsAttributedStringClass = [NSAttributedString class];
