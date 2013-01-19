@@ -439,52 +439,49 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
     [[NSNotificationCenter defaultCenter] postNotificationName:CKRefreshControl_UITableViewController_DidSetView_Notification object:dynamicSelf];
 }
 
-+ (void)load {
-    if ([UITableViewController instancesRespondToSelector:@selector(refreshControl)]) {
++ (void)load
+{
+    if ([UITableViewController instancesRespondToSelector:@selector(refreshControl)])
         return;
-    }
 
     // CKRefreshControl will masquerade as UIRefreshControl
-    Class UIRefreshControl = NSClassFromString(@"UIRefreshControl");
-    if (!UIRefreshControl)
-    {
-        UIRefreshControl = objc_allocateClassPair([CKRefreshControl class], "UIRefreshControl", 0);
-        objc_registerClassPair(UIRefreshControl);
+    static dispatch_once_t registerUIRefreshControlClass_onceToken;
+    dispatch_once(&registerUIRefreshControlClass_onceToken, ^{
+        Class uiRefreshControlClass = objc_allocateClassPair([self class], "UIRefreshControl", 0);
+        objc_registerClassPair(uiRefreshControlClass);
         _isMasquerading = YES;
-    }
-    
-    // Add UITableViewController.refreshControl if it isn't present
-    
-    Class tableViewController = [UITableViewController class];
-    IMP refreshControlIMP = imp_implementationWithBlock((IMP_WITH_BLOCK_TYPE)(^id(id dynamicSelf) {
-        return objc_getAssociatedObject(dynamicSelf, &CKRefreshControlKey);
-    }));
-    BOOL added = class_addMethod(tableViewController, @selector(refreshControl), refreshControlIMP, "@@:");
-    
-    NSAssert(added, @"We tried to add the refreshControl method, and it failed. This is going to break things, so we may as well stop here.");
-    
-    
-    IMP setRefreshControlIMP = imp_implementationWithBlock((IMP_WITH_BLOCK_TYPE)(^void(UITableViewController *dynamicSelf, id newControl) {
-        if (dynamicSelf.refreshControl == newControl) {
-            return;
-        }
-        objc_setAssociatedObject(dynamicSelf, &CKRefreshControlKey, newControl, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        
-        if ([newControl superview] != dynamicSelf.tableView) {
-            [dynamicSelf.tableView addSubview:newControl];
-        }
-    }));
-    
-    added = class_addMethod(tableViewController, @selector(setRefreshControl:), setRefreshControlIMP, "v@:@");
-    NSAssert(added, @"We tried to add the setRefreshControl: method, and it failed. This is going to break things, so we may as well stop here.");
 
-    // swizzle setView: method so we can post notification to CKRefreshControl ...
-    // CKRefreshControl will assign itself to the UIViewController
-    class_swizzleMethodAndStore(tableViewController,
-                                @selector(setView:),
-                                (IMP)CKRefreshControl_UITableViewController_SetView,
-                                (IMP *)&UITableViewController_SetViewIMP            );
-    
+        // Add UITableViewController.refreshControl if it isn't present
+        Class tableViewController = [UITableViewController class];
+        IMP refreshControlIMP = imp_implementationWithBlock((IMP_WITH_BLOCK_TYPE)(^id(id dynamicSelf) {
+            return objc_getAssociatedObject(dynamicSelf, &CKRefreshControlKey);
+        }));
+        BOOL added = class_addMethod(tableViewController, @selector(refreshControl), refreshControlIMP, "@@:");
+        
+        NSAssert(added, @"We tried to add the refreshControl method, and it failed. This is going to break things, so we may as well stop here.");
+
+
+        IMP setRefreshControlIMP = imp_implementationWithBlock((IMP_WITH_BLOCK_TYPE)(^void(UITableViewController *dynamicSelf, id newControl) {
+            if (dynamicSelf.refreshControl == newControl) {
+                return;
+            }
+            objc_setAssociatedObject(dynamicSelf, &CKRefreshControlKey, newControl, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+            if ([newControl superview] != dynamicSelf.tableView) {
+                [dynamicSelf.tableView addSubview:newControl];
+            }
+        }));
+
+        added = class_addMethod(tableViewController, @selector(setRefreshControl:), setRefreshControlIMP, "v@:@");
+        NSAssert(added, @"We tried to add the setRefreshControl: method, and it failed. This is going to break things, so we may as well stop here.");
+
+        // swizzle setView: method so we can post notification to CKRefreshControl ...
+        // CKRefreshControl will assign itself to the UIViewController
+        class_swizzleMethodAndStore(tableViewController,
+                                    @selector(setView:),
+                                    (IMP)CKRefreshControl_UITableViewController_SetView,
+                                    (IMP *)&UITableViewController_SetViewIMP            );
+    }); 
 }
 
 
