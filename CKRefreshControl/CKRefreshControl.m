@@ -74,18 +74,15 @@ static BOOL _isMasquerading = NO;
 - (id)init
 {
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
-    if (uiRefreshControlClass && !_isMasquerading) {
-        return [[uiRefreshControlClass alloc] init];
-    }
     
-    CGRect defaultFrame = CGRectMake(0, 0, 320, 60);
-    self = [super initWithFrame:defaultFrame];
-    if (self) {
-        // Initialization code
+    if (uiRefreshControlClass && !_isMasquerading)
+        return [[uiRefreshControlClass alloc] init];
+
+    if (self = [super init])
+    {
+        [self commonInit];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         self.backgroundColor = [UIColor clearColor];
-        [self populateSubviews];
-        [self setRefreshControlState:CKRefreshControlStateHidden];
     }
     return self;
 }
@@ -94,27 +91,29 @@ static BOOL _isMasquerading = NO;
 {
     if (self = [super initWithCoder:aDecoder])
     {
-        [[NSNotificationCenter defaultCenter] addObserver: self
-                                                 selector: @selector(tableViewControllerDidSetView:)
-                                                     name: CKRefreshControl_UITableViewController_DidSetView_Notification
-                                                   object: nil                                                              ];
+        [self commonInit];
+        
+        if ([aDecoder containsValueForKey:@"UITintColor"])
+            self.tintColor = (UIColor *)[aDecoder decodeObjectForKey:@"UITintColor"];
 
-        // Initialization code
-        self.frame = CGRectMake(0, 0, 320, 60);
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        self.backgroundColor = [UIColor clearColor];
-        [self populateSubviews];
-        [self setRefreshControlState:CKRefreshControlStateHidden];
+        // we can set its refresh control when the table view controller sets its view
+        [[NSNotificationCenter defaultCenter] addObserverForName: CKRefreshControl_UITableViewController_DidSetView_Notification
+                                                          object: nil
+                                                           queue: nil
+                                                      usingBlock: ^(NSNotification *notification) {
+                                                          UITableViewController *tableViewController = notification.object;
+                                                          if (tableViewController.refreshControl != (id)self)
+                                                              tableViewController.refreshControl = (id)self;
+                                                      }                                                                             ];
     }
     return self;
 }
 
-- (void) tableViewControllerDidSetView: (NSNotification *) notification
+- (void) commonInit
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CKRefreshControl_UITableViewController_DidSetView_Notification object:nil];
-    UITableViewController *tableViewController = notification.object;
-    if (tableViewController.refreshControl != (id)self)
-        tableViewController.refreshControl = (id)self;
+    self.frame = CGRectMake(0, 0, 320, 60);
+    [self populateSubviews];
+    [self setRefreshControlState:CKRefreshControlStateHidden];
 }
 
 // remove notification observer in case notification never fired
