@@ -28,7 +28,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [CKRefreshControl class];
+    [CKRefreshControl initialize];
     
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
     
