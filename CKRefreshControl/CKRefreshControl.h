@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "JHParagraphStyle.h"
 
 /* This is an API-compatible replacement of UIRefreshControl
  * It is intended to be an API-compatible replacement
@@ -57,3 +58,4 @@
 // This will be added to the class at runtime if not already available
 @property (nonatomic,retain) UIRefreshControl *refreshControl;
 @end
+

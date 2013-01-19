@@ -209,6 +209,14 @@
                     <tabBarItem key="tabBarItem" title="Storyboard" id="WoD-sS-YJb"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="xm0-AO-CTV">
                         <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Attributed Title">
+                                <attributes>
+                                    <font key="NSFont" metaFont="toolTip"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
                         <color key="tintColor" red="0.90222969890000004" green="0.52834169710000001" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                     </refreshControl>
                 </tableViewController>

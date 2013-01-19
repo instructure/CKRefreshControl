@@ -95,6 +95,9 @@ static BOOL _isMasquerading = NO;
         
         if ([aDecoder containsValueForKey:@"UITintColor"])
             self.tintColor = (UIColor *)[aDecoder decodeObjectForKey:@"UITintColor"];
+        
+        if ([aDecoder containsValueForKey:@"UIAttributedTitle"])
+            self.attributedTitle = [aDecoder decodeObjectForKey:@"UIAttributedTitle"];
 
         // we can set its refresh control when the table view controller sets its view
         [[NSNotificationCenter defaultCenter] addObserverForName: CKRefreshControl_UITableViewController_DidSetView_Notification
@@ -421,6 +424,12 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     }
 }
 
++ (void) initialize
+{
+    [JHParagraphStyle initialize];
+    [super initialize];
+}
+
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_5_1
 #define IMP_WITH_BLOCK_TYPE __bridge void*
@@ -483,7 +492,5 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
                                     (IMP *)&UITableViewController_SetViewIMP            );
     }); 
 }
-
-
 
 @end
