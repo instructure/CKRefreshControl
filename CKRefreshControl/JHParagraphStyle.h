@@ -15,7 +15,7 @@
 
 @class NSAttributedString;
 @class NSParagraphStyle;
-@interface NSAttributedString (CKRefreshControlAdditions)
+@interface NSAttributedString (JHParagraphStyleAdditions)
 // This will be added to the class at runtime if not already available
 @property (nonatomic,retain) NSParagraphStyle *paragraphStyle;
 @end
