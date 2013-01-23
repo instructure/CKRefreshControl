@@ -427,7 +427,7 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 + (void) initialize
 {
     [super initialize];
-    [JHParagraphStyle initialize];
+    [CKParagraphStyle initialize];
 }
 
 
