@@ -279,7 +279,8 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     if ([superview isKindOfClass:[UITableView class]]) {
         UITableViewController *tableViewController = (UITableViewController *)superview.nextResponder;
         if ([tableViewController isKindOfClass:[UITableViewController class]]) {
-            tableViewController.refreshControl = (id)self;
+            if (tableViewController.refreshControl != (id)self)
+                tableViewController.refreshControl = (id)self;
         }
     }
 }
