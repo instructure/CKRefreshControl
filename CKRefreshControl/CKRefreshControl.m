@@ -450,7 +450,7 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
 
 + (void)load
 {
-    if ([UITableViewController instancesRespondToSelector:@selector(refreshControl)])
+    if (objc_getClass("UIRefreshControl"))
         return;
 
     // CKRefreshControl will masquerade as UIRefreshControl

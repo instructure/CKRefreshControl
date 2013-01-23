@@ -55,7 +55,7 @@ static void *NSParagraphStyleKey;
 
 + (void) load
 {
-    if ([NSAttributedString instancesRespondToSelector:@selector(size)])
+    if (objc_getClass("NSParagraphStyle"))
         return;
     
     // CKParagraphStyle will masquerade as UIRefreshControl
