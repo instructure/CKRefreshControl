@@ -58,7 +58,7 @@ static void *NSParagraphStyleKey;
     if (objc_getClass("NSParagraphStyle"))
         return;
     
-    // CKParagraphStyle will masquerade as UIRefreshControl
+    // CKParagraphStyle will masquerade as NSParagraphStyle
     static dispatch_once_t registerNSParagraphStyleClass_onceToken;
     dispatch_once(&registerNSParagraphStyleClass_onceToken, ^{
         Class nsParagraphStyleClass = objc_allocateClassPair([self class], "NSParagraphStyle", 0);
