@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58E229DE16A9D76000177BFF /* StoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E229DD16A9D76000177BFF /* StoryboardViewController.m */; };
 		B70037231631D51700FA173A /* ColorRefreshController.m in Sources */ = {isa = PBXBuildFile; fileRef = B700371E1631D51700FA173A /* ColorRefreshController.m */; };
 		B70037241631D51700FA173A /* DefaultRefreshController.m in Sources */ = {isa = PBXBuildFile; fileRef = B70037201631D51700FA173A /* DefaultRefreshController.m */; };
 		B70037251631D51700FA173A /* TextRefreshingController.m in Sources */ = {isa = PBXBuildFile; fileRef = B70037221631D51700FA173A /* TextRefreshingController.m */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		58E229DC16A9D76000177BFF /* StoryboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryboardViewController.h; sourceTree = "<group>"; };
+		58E229DD16A9D76000177BFF /* StoryboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryboardViewController.m; sourceTree = "<group>"; };
 		B700371D1631D51700FA173A /* ColorRefreshController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorRefreshController.h; sourceTree = "<group>"; };
 		B700371E1631D51700FA173A /* ColorRefreshController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorRefreshController.m; sourceTree = "<group>"; };
 		B700371F1631D51700FA173A /* DefaultRefreshController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultRefreshController.h; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				B70037221631D51700FA173A /* TextRefreshingController.m */,
 				B700374A1635A5BF00FA173A /* AppearanceCustomizationController.h */,
 				B700374B1635A5BF00FA173A /* AppearanceCustomizationController.m */,
+				58E229DC16A9D76000177BFF /* StoryboardViewController.h */,
+				58E229DD16A9D76000177BFF /* StoryboardViewController.m */,
 				B71611671631D4DA00B08595 /* Supporting Files */,
 			);
 			path = RefreshControlDemo;
@@ -244,6 +249,7 @@
 				B70037241631D51700FA173A /* DefaultRefreshController.m in Sources */,
 				B70037251631D51700FA173A /* TextRefreshingController.m in Sources */,
 				B700374C1635A5BF00FA173A /* AppearanceCustomizationController.m in Sources */,
+				58E229DE16A9D76000177BFF /* StoryboardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +340,7 @@
 				GCC_PREFIX_HEADER = "RefreshControlDemo/RefreshControlDemo-Prefix.pch";
 				INFOPLIST_FILE = "RefreshControlDemo/RefreshControlDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -346,6 +353,7 @@
 				GCC_PREFIX_HEADER = "RefreshControlDemo/RefreshControlDemo-Prefix.pch";
 				INFOPLIST_FILE = "RefreshControlDemo/RefreshControlDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
