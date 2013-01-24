@@ -45,12 +45,11 @@ static void *NSParagraphStyleKey;
 // will work on both iOS 5 and iOS 6.
 + (Class)class {
     Class nsParagraphStyleClass = NSClassFromString(@"NSParagraphStyle");
-    if (nsParagraphStyleClass) {
+
+    if (nsParagraphStyleClass)
         return nsParagraphStyleClass;
-    }
-    else {
-        return [super class];
-    }
+
+    return [super class];
 }
 
 + (void) load
