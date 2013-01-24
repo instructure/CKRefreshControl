@@ -12,7 +12,7 @@ Using it is as simple as this:
     [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
     controller.refreshControl = (id)refreshControl;
 
-Then just link against the static library the `CKRefreshControl` project provides, and you're ready to go.
+Then just link against the static library the `CKRefreshControl` project provides, add the `-ObjC` linker flag, and you're ready to go.
 
 ![iOS 5 example](/instructure/CKRefreshControl/raw/readme-resources/iOS5.png) &nbsp; 
 ![iOS 6 example](/instructure/CKRefreshControl/raw/readme-resources/iOS6.png)
