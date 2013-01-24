@@ -427,8 +427,8 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 
 + (void) initialize
 {
-    [super initialize];
-    [CKParagraphStyle initialize];
+    if (self == [CKRefreshControl class])
+        [CKParagraphStyle initialize];
 }
 
 
