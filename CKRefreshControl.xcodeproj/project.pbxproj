@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		589E4E5C16AB267E00E9E0DF /* CKParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 589E4E5B16AB267E00E9E0DF /* CKParagraphStyle.m */; };
 		B71610F61631C4EB00B08595 /* CKRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B71610F51631C4EB00B08595 /* CKRefreshControl.m */; };
 		B71610F71631C4F400B08595 /* CKRefreshControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B71610F41631C4EB00B08595 /* CKRefreshControl.h */; };
 		B71610FA1631C54E00B08595 /* CKRefreshArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B71610F91631C54E00B08595 /* CKRefreshArrowView.m */; };
@@ -26,6 +27,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		589E4E5A16AB267E00E9E0DF /* CKParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKParagraphStyle.h; sourceTree = "<group>"; };
+		589E4E5B16AB267E00E9E0DF /* CKParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKParagraphStyle.m; sourceTree = "<group>"; };
 		B71610E31631C4BC00B08595 /* libCKRefreshControl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCKRefreshControl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71610EA1631C4BC00B08595 /* CKRefreshControl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CKRefreshControl-Prefix.pch"; sourceTree = "<group>"; };
 		B71610F41631C4EB00B08595 /* CKRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKRefreshControl.h; sourceTree = "<group>"; };
@@ -69,6 +72,8 @@
 				B71610F51631C4EB00B08595 /* CKRefreshControl.m */,
 				B71610F81631C54E00B08595 /* CKRefreshArrowView.h */,
 				B71610F91631C54E00B08595 /* CKRefreshArrowView.m */,
+				589E4E5A16AB267E00E9E0DF /* CKParagraphStyle.h */,
+				589E4E5B16AB267E00E9E0DF /* CKParagraphStyle.m */,
 			);
 			path = CKRefreshControl;
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 			files = (
 				B71610F61631C4EB00B08595 /* CKRefreshControl.m in Sources */,
 				B71610FA1631C54E00B08595 /* CKRefreshArrowView.m in Sources */,
+				589E4E5C16AB267E00E9E0DF /* CKParagraphStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
