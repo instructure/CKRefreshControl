@@ -403,12 +403,6 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     return [super class];
 }
 
-+ (void) initialize
-{
-    if (self == [CKRefreshControl class])
-        [CKParagraphStyle initialize];
-}
-
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_5_1
 #define IMP_WITH_BLOCK_TYPE __bridge void*
@@ -495,4 +489,3 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
 }
 
 @end
-

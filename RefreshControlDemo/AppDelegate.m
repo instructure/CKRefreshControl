@@ -28,8 +28,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [CKRefreshControl initialize];
-    
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
     
     [[CKRefreshControl appearanceWhenContainedIn:[AppearanceCustomizationController class], [UITabBarController class], nil] setTintColor:[UIColor greenColor]];
