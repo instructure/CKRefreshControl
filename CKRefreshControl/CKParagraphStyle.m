@@ -40,18 +40,6 @@ static void *NSParagraphStyleKey;
     return [super init];
 }
 
-// This is overridden so that things like
-//    [object isKindOfClass:[NSParagraphStyle class]]
-// will work on both iOS 5 and iOS 6.
-+ (Class)class {
-    Class nsParagraphStyleClass = NSClassFromString(@"NSParagraphStyle");
-
-    if (nsParagraphStyleClass)
-        return nsParagraphStyleClass;
-
-    return [super class];
-}
-
 + (void) load
 {
     if (objc_getClass("NSParagraphStyle"))
