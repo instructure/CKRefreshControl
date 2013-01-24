@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '5.0'
   s.source_files = 'CKRefreshControl/'
   s.public_header_files = 'CKRefreshControl/CKRefreshControl.h'
-  s.framework  = 'QuartzCore'
+  s.framework    = 'QuartzCore'
   s.requires_arc = true
+  s.xcconfig     = { "OTHER_LDFLAGS" => "-ObjC" }
 end
