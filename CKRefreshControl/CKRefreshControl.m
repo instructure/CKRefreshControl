@@ -28,28 +28,6 @@
 #error Add -fobjc-arc to the compile flags for CKRefreshControl.m
 #endif
 
-typedef IMP *IMPPointer;
-
-BOOL class_swizzleMethodAndStore(Class class, SEL original, IMP replacement, IMPPointer store)
-{
-    IMP imp = NULL;
-    Method method = class_getInstanceMethod(class, original);
-    
-    if (method)
-    {
-        const char *type = method_getTypeEncoding(method);
-        imp = class_replaceMethod(class, original, replacement, type);
-        
-        if (!imp)
-            imp = method_getImplementation(method);
-    }
-    
-    if (imp && store)
-        *store = imp;
-    
-    return (imp != NULL);
-}
-
 typedef enum {
     CKRefreshControlStateHidden,
     CKRefreshControlStatePulling,
@@ -417,12 +395,11 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 // will work on both iOS 5 and iOS 6.
 + (Class)class {
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
-    if (uiRefreshControlClass) {
+
+    if (uiRefreshControlClass)
         return uiRefreshControlClass;
-    }
-    else {
-        return [super class];
-    }
+
+    return [super class];
 }
 
 + (void) initialize
@@ -438,7 +415,29 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 #define IMP_WITH_BLOCK_TYPE id
 #endif
 
+typedef IMP *IMPPointer;
+
 static void *CKRefreshControlKey;
+
+static BOOL class_swizzleMethodAndStore(Class class, SEL original, IMP replacement, IMPPointer store)
+{
+    IMP imp = NULL;
+    Method method = class_getInstanceMethod(class, original);
+    
+    if (method)
+    {
+        const char *type = method_getTypeEncoding(method);
+        imp = class_replaceMethod(class, original, replacement, type);
+        
+        if (!imp)
+            imp = method_getImplementation(method);
+    }
+    
+    if (imp && store)
+        *store = imp;
+    
+    return (imp != NULL);
+}
 
 NSString *const CKRefreshControl_UITableViewController_DidSetView_Notification = @"CKRefreshControl_UITableViewController_DidSetView";
 static void CKRefreshControl_UITableViewController_SetView(UITableViewController *dynamicSelf, SEL _cmd, UITableView *view);
