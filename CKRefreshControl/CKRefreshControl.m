@@ -22,6 +22,7 @@
 
 #import "CKRefreshControl.h"
 #import "CKRefreshArrowView.h"
+#import "CKParagraphStyle.h"
 #import <objc/runtime.h>
 
 #if !__has_feature(objc_arc)

@@ -21,7 +21,6 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "CKParagraphStyle.h"
 
 /* This is an API-compatible replacement of UIRefreshControl
  * It is intended to be an API-compatible replacement

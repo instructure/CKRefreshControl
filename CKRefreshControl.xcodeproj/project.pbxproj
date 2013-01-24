@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		589E4E5C16AB267E00E9E0DF /* CKParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 589E4E5B16AB267E00E9E0DF /* CKParagraphStyle.m */; };
-		589E4E5E16AB287C00E9E0DF /* CKParagraphStyle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 589E4E5A16AB267E00E9E0DF /* CKParagraphStyle.h */; };
 		B71610F61631C4EB00B08595 /* CKRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B71610F51631C4EB00B08595 /* CKRefreshControl.m */; };
 		B71610F71631C4F400B08595 /* CKRefreshControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B71610F41631C4EB00B08595 /* CKRefreshControl.h */; };
 		B71610FA1631C54E00B08595 /* CKRefreshArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B71610F91631C54E00B08595 /* CKRefreshArrowView.m */; };
@@ -21,7 +20,6 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				589E4E5E16AB287C00E9E0DF /* CKParagraphStyle.h in CopyFiles */,
 				B71610F71631C4F400B08595 /* CKRefreshControl.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
