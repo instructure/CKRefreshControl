@@ -395,6 +395,9 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
         return [UIRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
 
+    if ([self isEqual:[UIRefreshControl class]])
+        return [CKRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
+
     return [super appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
 }
 
