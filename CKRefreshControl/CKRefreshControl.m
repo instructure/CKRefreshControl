@@ -82,6 +82,13 @@ static BOOL _isMasquerading = NO;
     return self;
 }
 
+- (void) commonInit
+{
+    self.frame = CGRectMake(0, 0, 320, 60);
+    [self populateSubviews];
+    [self setRefreshControlState:CKRefreshControlStateHidden];
+}
+
 - (void) tableViewControllerDidSetView: (NSNotification *) notification
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -91,13 +98,6 @@ static BOOL _isMasquerading = NO;
     UITableViewController *tableViewController = notification.object;
     if (tableViewController.refreshControl != (id)self)
         tableViewController.refreshControl = (id)self;
-}
-
-- (void) commonInit
-{
-    self.frame = CGRectMake(0, 0, 320, 60);
-    [self populateSubviews];
-    [self setRefreshControlState:CKRefreshControlStateHidden];
 }
 
 // remove notification observer in case notification never fired
@@ -358,7 +358,6 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     }
 }
 
-
 #if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_5_1
 #define IMP_WITH_BLOCK_TYPE __bridge void*
 #else
@@ -427,9 +426,7 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
 #error Unsupported CPU
 #endif
         if (UIRefreshControlClassRef && *UIRefreshControlClassRef == Nil)
-        {
             *UIRefreshControlClassRef = objc_duplicateClass(self, "UIRefreshControl", 0);
-        }
         
         // Add UITableViewController.refreshControl if it isn't present
         Class tableViewController = [UITableViewController class];
