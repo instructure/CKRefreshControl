@@ -36,8 +36,6 @@ typedef enum {
     CKRefreshControlStateRefreshing
 } CKRefreshControlState;
 
-static BOOL _isMasquerading = NO;
-
 @interface CKRefreshControl ()
 @property (nonatomic) CKRefreshControlState refreshControlState;
 @end
