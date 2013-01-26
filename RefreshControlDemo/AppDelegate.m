@@ -30,7 +30,7 @@
 {
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
     
-    [[CKRefreshControl appearanceWhenContainedIn:[AppearanceCustomizationController class], [UITabBarController class], nil] setTintColor:[UIColor greenColor]];
+    [[UIRefreshControl appearanceWhenContainedIn:[AppearanceCustomizationController class], nil] setTintColor:[UIColor greenColor]];
     
     // Override point for customization after application launch.
     return YES;

@@ -36,8 +36,6 @@ typedef enum {
     CKRefreshControlStateRefreshing
 } CKRefreshControlState;
 
-static BOOL _isMasquerading = NO;
-
 @interface CKRefreshControl ()
 @property (nonatomic) CKRefreshControlState refreshControlState;
 @end
@@ -53,10 +51,9 @@ static BOOL _isMasquerading = NO;
 - (id)init
 {
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
+        return (id)[[UIRefreshControl alloc] init];
     
-    if (uiRefreshControlClass && !_isMasquerading)
-        return [[uiRefreshControlClass alloc] init];
-
     if (self = [super init])
     {
         [self commonInit];
@@ -79,14 +76,10 @@ static BOOL _isMasquerading = NO;
             self.attributedTitle = [aDecoder decodeObjectForKey:@"UIAttributedTitle"];
 
         // we can set its refresh control when the table view controller sets its view
-        [[NSNotificationCenter defaultCenter] addObserverForName: CKRefreshControl_UITableViewController_DidSetView_Notification
-                                                          object: nil
-                                                           queue: nil
-                                                      usingBlock: ^(NSNotification *notification) {
-                                                          UITableViewController *tableViewController = notification.object;
-                                                          if (tableViewController.refreshControl != (id)self)
-                                                              tableViewController.refreshControl = (id)self;
-                                                      }                                                                             ];
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(tableViewControllerDidSetView:)
+                                                     name: CKRefreshControl_UITableViewController_DidSetView_Notification
+                                                   object: nil                                                              ];
     }
     return self;
 }
@@ -98,10 +91,23 @@ static BOOL _isMasquerading = NO;
     [self setRefreshControlState:CKRefreshControlStateHidden];
 }
 
+- (void) tableViewControllerDidSetView: (NSNotification *) notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:CKRefreshControl_UITableViewController_DidSetView_Notification
+                                                  object:nil];
+
+    UITableViewController *tableViewController = notification.object;
+    if (tableViewController.refreshControl != (id)self)
+        tableViewController.refreshControl = (id)self;
+}
+
 // remove notification observer in case notification never fired
 - (void) awakeFromNib
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:CKRefreshControl_UITableViewController_DidSetView_Notification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: CKRefreshControl_UITableViewController_DidSetView_Notification
+                                                  object: nil                                                           ];
     [super awakeFromNib];
 }
 
@@ -131,10 +137,11 @@ static BOOL _isMasquerading = NO;
     [self addSubview:spinner];
 }
 
-- (void)setTintColor:(UIColor *)tintColor {
-    if (tintColor == nil) {
-        tintColor = [UIColor colorWithWhite:0.5 alpha:1];
-    }
+- (void)setTintColor: (UIColor *) tintColor
+{
+    if (!tintColor)
+        return;
+
     textLabel.textColor = tintColor;
     arrow.tintColor = tintColor;
     spinner.color = tintColor;
@@ -357,14 +364,14 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 
 // If UIRefreshControl is available, we need to customize that class, not
 // CKRefreshControl. Otherwise, the +appearance proxy is broken on iOS 6.
-+ (id)appearance {
++ (id)appearance
+{
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
-    if (uiRefreshControlClass) {
+
+    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
         return [UIRefreshControl appearance];
-    }
-    else {
-        return [super appearance];
-    }
+    
+    return [super appearance];
 }
 
 + (id)appearanceWhenContainedIn:(Class<UIAppearanceContainer>)ContainerClass, ... {
@@ -384,25 +391,12 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     va_end(list);
     
     Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
-    if (uiRefreshControlClass) {
+    
+    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
         return [UIRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
-    } else {
-        return [super appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
-    }
+
+    return [super appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
 }
-
-// This is overridden so that things like
-//    [control isKindOfClass:[CKRefreshControl class]]
-// will work on both iOS 5 and iOS 6.
-+ (Class)class {
-    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
-
-    if (uiRefreshControlClass)
-        return uiRefreshControlClass;
-
-    return [super class];
-}
-
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_5_1
 #define IMP_WITH_BLOCK_TYPE __bridge void*
@@ -451,10 +445,32 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
     // CKRefreshControl will masquerade as UIRefreshControl
     static dispatch_once_t registerUIRefreshControlClass_onceToken;
     dispatch_once(&registerUIRefreshControlClass_onceToken, ^{
-        Class uiRefreshControlClass = objc_allocateClassPair([self class], "UIRefreshControl", 0);
-        objc_registerClassPair(uiRefreshControlClass);
-        _isMasquerading = YES;
 
+        Class *UIRefreshControlClassRef = NULL;
+#if TARGET_CPU_ARM
+        __asm(
+              "movw %0, :lower16:(L_OBJC_CLASS_UIRefreshControl-(LPC0+4))\n"
+              "movt %0, :upper16:(L_OBJC_CLASS_UIRefreshControl-(LPC0+4))\n"
+              "LPC0: add %0, pc" : "=r"(UIRefreshControlClassRef)
+              );
+#elif TARGET_CPU_X86_64
+        __asm("leaq L_OBJC_CLASS_UIRefreshControl(%%rip), %0" : "=r"(UIRefreshControlClassRef));
+#elif TARGET_CPU_X86
+        void *pc = NULL;
+        __asm(
+              "calll L0\n"
+              "L0: popl %0\n"
+              "leal L_OBJC_CLASS_UIRefreshControl-L0(%0), %1" : "=r"(pc), "=r"(UIRefreshControlClassRef)
+              );
+#else
+#error Unsupported CPU
+#endif
+        if (UIRefreshControlClassRef && *UIRefreshControlClassRef == Nil)
+        {
+            *UIRefreshControlClassRef = objc_allocateClassPair(self, "UIRefreshControl", 0);
+            objc_registerClassPair(*UIRefreshControlClassRef);
+        }
+        
         // Add UITableViewController.refreshControl if it isn't present
         Class tableViewController = [UITableViewController class];
         IMP refreshControlIMP = imp_implementationWithBlock((IMP_WITH_BLOCK_TYPE)(^id(id dynamicSelf) {
@@ -487,5 +503,29 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
                                     (IMP *)&UITableViewController_SetViewIMP            );
     });
 }
+
+__asm(
+#if defined(__OBJC2__) && __OBJC2__
+      ".section        __DATA,__objc_classrefs,regular,no_dead_strip\n"
+#if	TARGET_RT_64_BIT
+      ".align          3\n"
+      "L_OBJC_CLASS_UIRefreshControl:\n"
+      ".quad           _OBJC_CLASS_$_UIRefreshControl\n"
+#else
+      ".align          2\n"
+      "L_OBJC_CLASS_UIRefreshControl:\n"
+      ".long           _OBJC_CLASS_$_UIRefreshControl\n"
+#endif
+#else
+      ".section        __TEXT,__cstring,cstring_literals\n"
+      "L_OBJC_CLASS_NAME_UIRefreshControl:\n"
+      ".asciz          \"UIRefreshControl\"\n"
+      ".section        __OBJC,__cls_refs,literal_pointers,no_dead_strip\n"
+      ".align          2\n"
+      "L_OBJC_CLASS_UIRefreshControl:\n"
+      ".long           L_OBJC_CLASS_NAME_UIRefreshControl\n"
+#endif
+      ".weak_reference _OBJC_CLASS_$_UIRefreshControl\n"
+      );
 
 @end
