@@ -29,9 +29,8 @@
 {
     [super viewDidLoad];
     
-    CKRefreshControl *refreshControl = [CKRefreshControl new];
-    [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = (id)refreshControl;
+    self.refreshControl = (id)[[CKRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)doRefresh:(CKRefreshControl *)sender {
