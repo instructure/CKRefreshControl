@@ -31,8 +31,6 @@
 #define IMP_WITH_BLOCK_TYPE id
 #endif
 
-static void *NSParagraphStyleKey;
-
 - (id) initWithCoder: (NSCoder *) aDecoder
 {
     return [super init];
@@ -67,26 +65,7 @@ static void *NSParagraphStyleKey;
 #error Unsupported CPU
 #endif
         if (NSParagraphStyleClassRef && *NSParagraphStyleClassRef == Nil)
-        {
             *NSParagraphStyleClassRef = objc_duplicateClass(self, "NSParagraphStyle", 0);
-        }
-        
-        Class nsAttributedStringClass = [NSAttributedString class];
-        IMP paragraphStyleIMP = imp_implementationWithBlock((IMP_WITH_BLOCK_TYPE)(^NSParagraphStyle *(id dynamicSelf) {
-            return objc_getAssociatedObject(dynamicSelf, &NSParagraphStyleKey);
-        }));
-        BOOL added = class_addMethod(nsAttributedStringClass, @selector(paragraphStyle), paragraphStyleIMP, "@@:");
-        NSAssert(added, @"We tried to add the paragraphStyle method, and it failed. This is going to break things, so we may as well stop here.");
-        
-        IMP setParagraphStyleIMP = imp_implementationWithBlock((IMP_WITH_BLOCK_TYPE)(^void(NSAttributedString *dynamicSelf, id paragraphStyle) {
-            if (dynamicSelf.paragraphStyle == paragraphStyle) {
-                return;
-            }
-            objc_setAssociatedObject(dynamicSelf, &NSParagraphStyleKey, paragraphStyle, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }));
-        
-        added = class_addMethod(nsAttributedStringClass, @selector(setParagraphStyle:), setParagraphStyleIMP, "v@:@");
-        NSAssert(added, @"We tried to add the setParagraphStyle: method, and it failed. This is going to break things, so we may as well stop here.");
     });
 }
 __asm(
