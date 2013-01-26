@@ -50,6 +50,10 @@ typedef enum {
 
 - (id)init
 {
+    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
+        return (id)[[UIRefreshControl alloc] init];
+    
     if (self = [super init])
     {
         [self commonInit];
@@ -356,6 +360,44 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     }
 }
 
+#pragma mark - Class methods
+
+// If UIRefreshControl is available, we need to customize that class, not
+// CKRefreshControl. Otherwise, the +appearance proxy is broken on iOS 6.
++ (id)appearance
+{
+    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+
+    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
+        return [UIRefreshControl appearance];
+    
+    return [super appearance];
+}
+
++ (id)appearanceWhenContainedIn:(Class<UIAppearanceContainer>)ContainerClass, ... {
+    
+    va_list list;
+    va_start(list, ContainerClass);
+    
+    Class classes[10] = {0};
+    
+    for (int i=0; i<10; ++i) {
+        Class c = va_arg(list, Class);
+        if (c == Nil) {
+            break;
+        }
+        classes[i] = c;
+    }
+    va_end(list);
+    
+    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    
+    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
+        return [UIRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
+
+    return [super appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
+}
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_5_1
 #define IMP_WITH_BLOCK_TYPE __bridge void*
 #else
@@ -424,7 +466,10 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
 #error Unsupported CPU
 #endif
         if (UIRefreshControlClassRef && *UIRefreshControlClassRef == Nil)
-            *UIRefreshControlClassRef = objc_duplicateClass(self, "UIRefreshControl", 0);
+        {
+            *UIRefreshControlClassRef = objc_allocateClassPair(self, "UIRefreshControl", 0);
+            objc_registerClassPair(*UIRefreshControlClassRef);
+        }
         
         // Add UITableViewController.refreshControl if it isn't present
         Class tableViewController = [UITableViewController class];
