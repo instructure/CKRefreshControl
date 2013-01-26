@@ -20,7 +20,7 @@ Then just link against the static library the `CKRefreshControl` project provide
 
 ### API Compatible
 
-CKRefreshControl has exactly the same public API as UIRefreshControl. Thus, your code can treat either one as an instance of the other. Just use CKRefreshControl or UIRefreshControl throughout your code, and you'll magically get iOS 5 support.
+CKRefreshControl has exactly the same public API as UIRefreshControl. Thus, your code can treat either one as an instance of the other. Just use `CKRefreshControl` or `UIRefreshControl` throughout your code, and you'll magically get iOS 5 support.
 
 We take advantage of this to provide excellent iOS 6 compatibility. When running on an iOS 6 device, `-[CKRefreshControl init]` actually returns a `UIRefreshControl` instance. No CKRefreshControl is ever initialized, and everything will work exactly as if CKRefreshControl did not even exist.
 
