@@ -140,7 +140,7 @@ typedef enum {
 - (void)setTintColor: (UIColor *) tintColor
 {
     if (!tintColor)
-        return;
+        tintColor = [UIColor colorWithWhite:0.5 alpha:1];
 
     textLabel.textColor = tintColor;
     arrow.tintColor = tintColor;
