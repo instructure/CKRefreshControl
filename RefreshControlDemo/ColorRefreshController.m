@@ -39,10 +39,9 @@
     @"Black" : [UIColor blackColor],
     };
     
-    CKRefreshControl *refreshControl = [CKRefreshControl new];
-    refreshControl.tintColor = [UIColor orangeColor];
-    [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = (id)refreshControl;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor orangeColor];
+    [self.refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)doRefresh:(CKRefreshControl *)sender {

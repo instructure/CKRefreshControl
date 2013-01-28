@@ -1,6 +1,6 @@
 # CKRefreshControl
 
-Open source 100% API-compatible replacement for `UIRefreshControl`, supporting iOS 5.0+
+Open source 100% API-compatible replacement for [UIRefreshControl](http://developer.apple.com/library/ios/#documentation/uikit/reference/UIRefreshControl_class/Reference/Reference.html) , supporting iOS 5.0+
 
 Using it is as simple as this:
 
@@ -8,9 +8,8 @@ Using it is as simple as this:
 
     UITableViewController *controller;
 
-    CKRefreshControl *refreshControl = [CKRefreshControl new];
-    [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
-    controller.refreshControl = (id)refreshControl;
+    controller.refreshControl = [[UIRefreshControl alloc] init];
+    [controller.refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
 
 Then just link against the static library the `CKRefreshControl` project provides, add the `-ObjC` linker flag, and you're ready to go.
 
@@ -21,13 +20,11 @@ Then just link against the static library the `CKRefreshControl` project provide
 
 ### API Compatible
 
-CKRefreshControl has exactly the same public API as UIRefreshControl. Thus, your code can treat either one as an instance of the other. Just use CKRefreshControl instead of UIRefreshControl everywhere, and you'll magically get iOS 5 support.
+CKRefreshControl has exactly the same public API as UIRefreshControl. Thus, your code can treat either one as an instance of the other. Just use `CKRefreshControl` or `UIRefreshControl` throughout your code, and you'll magically get iOS 5 support.
 
 We take advantage of this to provide excellent iOS 6 compatibility. When running on an iOS 6 device, `-[CKRefreshControl init]` actually returns a `UIRefreshControl` instance. No CKRefreshControl is ever initialized, and everything will work exactly as if CKRefreshControl did not even exist.
 
 You can even use the `+appearance` proxies introduced in iOS 5.0; CKRefreshControl will appropriately forward the customizations to UIRefreshControl on iOS 6.
-
-There is only one minor inconvenience. The `-[UITableViewController setRefreshControl:]` method in iOS 6 accepts a `UIRefreshControl *` parameter. Although CKRefreshControl is API compatible with UIRefreshControl, it is not a subclass (so it can be used on iOS 5). Thus, the compiler does not know that CKRefreshControl can be used as a UIRefreshControl. Thus, you must add an explicit cast to avoid a compiler warning. This is completely safe.
 
 ---
 
@@ -50,6 +47,15 @@ CKRefreshControl was originally part of our internal "CanvasKit" library, used i
 Yes! Instructure is using it in shipping code with no problems. That said, if you find a bug, please let us know and we'll make it work. 
 
 --- 
+
+### Contributors
+
+* [@bjhomer](http://github.com/bjhomer)
+* [@johnhaitas](http://github.com/johnhaitas)
+* [@steipete](http://github.com/steipete)
+* [@0xced](http://github.com/0xced)
+
+---
 
 ### License
 
