@@ -371,6 +371,9 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
         return [UIRefreshControl appearance];
     
+    if ([self isEqual:[UIRefreshControl class]])
+        return [CKRefreshControl appearance];
+
     return [super appearance];
 }
 
