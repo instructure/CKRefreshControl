@@ -48,7 +48,7 @@ Yes! Instructure is using it in shipping code with no problems. That said, if yo
 
 --- 
 
-### Contributor
+### Contributors
 
 * [@bjhomer](http://github.com/bjhomer)
 * [@johnhaitas](http://github.com/johnhaitas)
