@@ -50,10 +50,12 @@ typedef enum {
 
 - (id)init
 {
-    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
-    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
+    Class uiRefreshControlClass = objc_getClass("UIRefreshControl");
+    Class ckRefreshControlClass = objc_getClass("CKRefreshControl");
+
+    if (![uiRefreshControlClass isSubclassOfClass:ckRefreshControlClass])
         return (id)[[UIRefreshControl alloc] init];
-    
+
     if (self = [super init])
     {
         [self commonInit];
@@ -362,16 +364,31 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
 
 #pragma mark - Class methods
 
++ (Class) class
+{
+    Class uiRefreshControlClass = objc_getClass("UIRefreshControl");
+    Class ckRefreshControlClass = objc_getClass("CKRefreshControl");
+    
+    if (![self isSubclassOfClass:ckRefreshControlClass])
+        return uiRefreshControlClass;
+
+    if ([self isEqual:uiRefreshControlClass])
+        return ckRefreshControlClass;
+
+    return [super class];
+}
+
 // If UIRefreshControl is available, we need to customize that class, not
 // CKRefreshControl. Otherwise, the +appearance proxy is broken on iOS 6.
 + (id)appearance
 {
-    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    Class uiRefreshControlClass = objc_getClass("UIRefreshControl");
+    Class ckRefreshControlClass = objc_getClass("CKRefreshControl");
 
-    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
+    if (![uiRefreshControlClass isSubclassOfClass:ckRefreshControlClass])
         return [UIRefreshControl appearance];
-    
-    if ([self isEqual:[UIRefreshControl class]])
+
+    if ([self isEqual:uiRefreshControlClass])
         return [CKRefreshControl appearance];
 
     return [super appearance];
@@ -393,12 +410,13 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     }
     va_end(list);
     
-    Class uiRefreshControlClass = NSClassFromString(@"UIRefreshControl");
+    Class uiRefreshControlClass = objc_getClass("UIRefreshControl");
+    Class ckRefreshControlClass = objc_getClass("CKRefreshControl");
     
-    if (![uiRefreshControlClass isSubclassOfClass:[CKRefreshControl class]])
+    if (![uiRefreshControlClass isSubclassOfClass:ckRefreshControlClass])
         return [UIRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
 
-    if ([self isEqual:[UIRefreshControl class]])
+    if ([self isEqual:uiRefreshControlClass])
         return [CKRefreshControl appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
 
     return [super appearanceWhenContainedIn:ContainerClass, classes[0], classes[1], classes[2], classes[3], classes[4], classes[5], classes[6], classes[7], classes[8], classes[9], nil];
