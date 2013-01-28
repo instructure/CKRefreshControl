@@ -1,6 +1,6 @@
 # CKRefreshControl
 
-Open source 100% API-compatible replacement for `UIRefreshControl`, supporting iOS 5.0+
+Open source 100% API-compatible replacement for [UIRefreshControl](http://developer.apple.com/library/ios/#documentation/uikit/reference/UIRefreshControl_class/Reference/Reference.html) , supporting iOS 5.0+
 
 Using it is as simple as this:
 
