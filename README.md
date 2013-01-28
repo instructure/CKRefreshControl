@@ -48,6 +48,15 @@ Yes! Instructure is using it in shipping code with no problems. That said, if yo
 
 --- 
 
+### Contributor
+
+* [@bjhomer](http://github.com/bjhomer)
+* [@johnhaitas](http://github.com/johnhaitas)
+* [@steipete](http://github.com/steipete)
+* [@0xced](http://github.com/0xced)
+
+---
+
 ### License
 
 CKRefreshControl, and all the accompanying source code, is released under the MIT license. You can see the full text of the license in the accompanying LICENSE.txt file.
