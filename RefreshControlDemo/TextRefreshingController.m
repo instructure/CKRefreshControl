@@ -32,11 +32,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    CKRefreshControl *refreshControl = [CKRefreshControl new];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"This is a test"];
-    [refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = (id)refreshControl;
+
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"This is a test"];
+    [self.refreshControl addTarget:self action:@selector(doRefresh:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)doRefresh:(CKRefreshControl *)sender {
