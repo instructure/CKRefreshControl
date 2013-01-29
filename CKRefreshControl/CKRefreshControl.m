@@ -71,7 +71,10 @@ typedef enum {
         [self commonInit];
         
         if ([aDecoder containsValueForKey:@"UITintColor"])
+        {
             self.tintColor = (UIColor *)[aDecoder decodeObjectForKey:@"UITintColor"];
+            _ignoreFirstAppearanceProxy = YES;
+        }
         
         if ([aDecoder containsValueForKey:@"UIAttributedTitle"])
             self.attributedTitle = [aDecoder decodeObjectForKey:@"UIAttributedTitle"];
@@ -81,8 +84,6 @@ typedef enum {
                                                  selector: @selector(tableViewControllerDidSetView:)
                                                      name: CKRefreshControl_UITableViewController_DidSetView_Notification
                                                    object: nil                                                              ];
-
-        _ignoreFirstAppearanceProxy = YES;
     }
     return self;
 }
