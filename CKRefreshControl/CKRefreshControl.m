@@ -44,6 +44,7 @@ typedef enum {
     UILabel *textLabel;
     UIActivityIndicatorView *spinner;
     CKRefreshArrowView *arrow;
+    UIColor *defaultTintColor;
     CGFloat originalTopContentInset;
     CGFloat decelerationStartOffset;
 }
@@ -69,7 +70,10 @@ typedef enum {
         [self commonInit];
         
         if ([aDecoder containsValueForKey:@"UITintColor"])
+        {
             self.tintColor = (UIColor *)[aDecoder decodeObjectForKey:@"UITintColor"];
+            defaultTintColor = self.tintColor;
+        }
         
         if ([aDecoder containsValueForKey:@"UIAttributedTitle"])
             self.attributedTitle = [aDecoder decodeObjectForKey:@"UIAttributedTitle"];
@@ -79,6 +83,7 @@ typedef enum {
                                                  selector: @selector(tableViewControllerDidSetView:)
                                                      name: CKRefreshControl_UITableViewController_DidSetView_Notification
                                                    object: nil                                                              ];
+
     }
     return self;
 }
@@ -88,6 +93,7 @@ typedef enum {
     self.frame = CGRectMake(0, 0, 320, 60);
     [self populateSubviews];
     [self setRefreshControlState:CKRefreshControlStateHidden];
+    defaultTintColor = [UIColor colorWithWhite:0.5 alpha:1];
 }
 
 - (void) tableViewControllerDidSetView: (NSNotification *) notification
@@ -139,7 +145,7 @@ typedef enum {
 - (void)setTintColor: (UIColor *) tintColor
 {
     if (!tintColor)
-        tintColor = [UIColor colorWithWhite:0.5 alpha:1];
+        tintColor = defaultTintColor;
 
     textLabel.textColor = tintColor;
     arrow.tintColor = tintColor;
@@ -386,8 +392,8 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     return [super appearance];
 }
 
-+ (id)appearanceWhenContainedIn:(Class<UIAppearanceContainer>)ContainerClass, ... {
-    
++ (id)appearanceWhenContainedIn:(Class<UIAppearanceContainer>)ContainerClass, ...
+{
     va_list list;
     va_start(list, ContainerClass);
     
