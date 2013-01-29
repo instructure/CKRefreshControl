@@ -46,6 +46,8 @@ typedef enum {
     CKRefreshArrowView *arrow;
     CGFloat originalTopContentInset;
     CGFloat decelerationStartOffset;
+
+    BOOL _ignoreFirstAppearanceProxy;
 }
 
 - (id)init
@@ -79,6 +81,8 @@ typedef enum {
                                                  selector: @selector(tableViewControllerDidSetView:)
                                                      name: CKRefreshControl_UITableViewController_DidSetView_Notification
                                                    object: nil                                                              ];
+
+        _ignoreFirstAppearanceProxy = YES;
     }
     return self;
 }
@@ -88,6 +92,7 @@ typedef enum {
     self.frame = CGRectMake(0, 0, 320, 60);
     [self populateSubviews];
     [self setRefreshControlState:CKRefreshControlStateHidden];
+    _ignoreFirstAppearanceProxy = NO;
 }
 
 - (void) tableViewControllerDidSetView: (NSNotification *) notification
@@ -138,6 +143,19 @@ typedef enum {
 
 - (void)setTintColor: (UIColor *) tintColor
 {
+    if (_ignoreFirstAppearanceProxy)
+    {
+        NSPredicate *appearanceProxyPredicate = [NSPredicate predicateWithBlock:^BOOL(NSString *stackSymbol,NSDictionary *bindings){
+            return ([stackSymbol rangeOfString:@"_UIAppearance"].location != NSNotFound);
+        }];
+        NSArray *_appearanceStackSymbols = [[NSThread callStackSymbols] filteredArrayUsingPredicate:appearanceProxyPredicate];
+        if (_appearanceStackSymbols.count > 0)
+        {
+            _ignoreFirstAppearanceProxy = NO;
+            return;
+        }
+    }
+
     if (!tintColor)
         tintColor = [UIColor colorWithWhite:0.5 alpha:1];
 
@@ -386,8 +404,8 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     return [super appearance];
 }
 
-+ (id)appearanceWhenContainedIn:(Class<UIAppearanceContainer>)ContainerClass, ... {
-    
++ (id)appearanceWhenContainedIn:(Class<UIAppearanceContainer>)ContainerClass, ...
+{
     va_list list;
     va_start(list, ContainerClass);
     
