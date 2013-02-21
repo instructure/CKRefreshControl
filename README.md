@@ -11,9 +11,7 @@ Using it is as simple as this:
 
 Yes, that's exactly the code you'd write on iOS 6. No changes required.
 
-You can also configure the refresh control in a storyboard, or use the `+appearance` API proxies if you'd like. It all works just like you'd hope, but now you can deploy it back to iOS 5.0 as well.
-
-Just link against the static library the `CKRefreshControl` project provides, add the `-ObjC` linker flag, and you're ready to go.
+You can also configure the refresh control in a storyboard, or use the `+appearance` API proxies if you'd like. It all works just like you'd hope, but now you can deploy it back to iOS 5.0 as well. Just link against the static library the `CKRefreshControl` project provides, add the `-ObjC` linker flag, and you're ready to go.
 
 ![iOS 5 example](https://raw.github.com/instructure/CKRefreshControl/readme-resources/iOS5.png) &nbsp; 
 ![iOS 6 example](https://raw.github.com/instructure/CKRefreshControl/readme-resources/iOS6.png)
