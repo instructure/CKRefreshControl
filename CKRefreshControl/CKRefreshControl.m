@@ -242,10 +242,11 @@ typedef enum {
         scrollView = (UIScrollView *)self.superview;
     }
     
-    [UIView animateWithDuration:0.2 animations:^{
-        scrollView.contentInset = contentInset;
-        
-    }];
+    if(!UIEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, contentInset)) {
+        [UIView animateWithDuration:0.2 animations:^{
+            scrollView.contentInset = contentInset;
+        }];
+    }
     
 }
 
