@@ -457,6 +457,13 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
     [[NSNotificationCenter defaultCenter] postNotificationName:CKRefreshControl_UITableViewController_DidSetView_Notification object:dynamicSelf];
 }
 
+
+// +load has some inline asm. When compiling a reference to a class name (e.g. UIRefreshControl),
+// the compiler emits "L_OBJC_CLASS_UIRefreshControl". If this label is nil or doesn't exist, the
+// class reference will be Nil. So we need to manually set the value at that label, and then
+// register the class with the runtime. That's all that's going on here. For a line-by-line
+// breakdown of what's going on, see https://gist.github.com/OliverLetterer/4643294/
+
 + (void)load
 {
     if (objc_getClass("UIRefreshControl"))
@@ -524,12 +531,10 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
     });
 }
 
+// This is just declaring the L_OBJC_CLASS_UIRefreshControl label, so that we can reference it in +load.
+// Again, see https://gist.github.com/OliverLetterer/4643294/ for more information.
 
-// Don't let this stuff scare you. It just tricks the compiler into thinking
-// UIRefreshControl was available in iOS 5, so it doesn't emit a Nil class
-// pointer. Otherwise, [UIRefreshControl class] would be Nil on iOS 5.0.
 __asm(
-#if defined(__OBJC2__) && __OBJC2__
       ".section        __DATA,__objc_classrefs,regular,no_dead_strip\n"
 #if	TARGET_RT_64_BIT
       ".align          3\n"
@@ -539,15 +544,6 @@ __asm(
       ".align          2\n"
       "L_OBJC_CLASS_UIRefreshControl:\n"
       ".long           _OBJC_CLASS_$_UIRefreshControl\n"
-#endif
-#else
-      ".section        __TEXT,__cstring,cstring_literals\n"
-      "L_OBJC_CLASS_NAME_UIRefreshControl:\n"
-      ".asciz          \"UIRefreshControl\"\n"
-      ".section        __OBJC,__cls_refs,literal_pointers,no_dead_strip\n"
-      ".align          2\n"
-      "L_OBJC_CLASS_UIRefreshControl:\n"
-      ".long           L_OBJC_CLASS_NAME_UIRefreshControl\n"
 #endif
       ".weak_reference _OBJC_CLASS_$_UIRefreshControl\n"
       );
