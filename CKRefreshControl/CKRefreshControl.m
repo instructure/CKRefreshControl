@@ -524,6 +524,10 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
     });
 }
 
+
+// Don't let this stuff scare you. It just tricks the compiler into thinking
+// UIRefreshControl was available in iOS 5, so it doesn't emit a Nil class
+// pointer. Otherwise, [UIRefreshControl class] would be Nil on iOS 5.0.
 __asm(
 #if defined(__OBJC2__) && __OBJC2__
       ".section        __DATA,__objc_classrefs,regular,no_dead_strip\n"
