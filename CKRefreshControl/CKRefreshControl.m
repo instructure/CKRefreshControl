@@ -227,20 +227,20 @@ typedef enum {
     };
     
     
+    UIScrollView *scrollView = nil;
+    if ([self.superview isKindOfClass:[UIScrollView class]]) {
+        scrollView = (UIScrollView *)self.superview;
+    }
     
-    UIEdgeInsets contentInset = UIEdgeInsetsMake(originalTopContentInset, 0, 0, 0);
+    // Keep hold of original left/bottom/right insets
+    UIEdgeInsets contentInset = UIEdgeInsetsMake(originalTopContentInset, scrollView.contentInset.left, scrollView.contentInset.bottom, scrollView.contentInset.right);
     if (refreshControlState == CKRefreshControlStateRefreshing) {
-        contentInset = UIEdgeInsetsMake(self.frame.size.height + originalTopContentInset, 0, 0, 0);
+        contentInset = UIEdgeInsetsMake(self.frame.size.height + originalTopContentInset, scrollView.contentInset.left, scrollView.contentInset.bottom, scrollView.contentInset.right);
     }
     else {
         [spinner stopAnimating];
     }
     
-    
-    UIScrollView *scrollView = nil;
-    if ([self.superview isKindOfClass:[UIScrollView class]]) {
-        scrollView = (UIScrollView *)self.superview;
-    }
     
     if(!UIEdgeInsetsEqualToEdgeInsets(scrollView.contentInset, contentInset)) {
         [UIView animateWithDuration:0.2 animations:^{
@@ -328,7 +328,8 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
         // Adjust inset to make sure potential header view is shown correctly if user pulls down scroll view while in refreshing state
         CGFloat offset = MAX(scrollview.contentOffset.y * -1, 0);
 		offset = MIN(offset, self.bounds.size.height);
-		scrollview.contentInset = UIEdgeInsetsMake(offset, 0.0f, 0.0f, 0.0f);
+		// Keep hold of original left/bottom/right insets
+		scrollview.contentInset = UIEdgeInsetsMake(offset, scrollview.contentInset.left, scrollview.contentInset.bottom, scrollview.contentInset.right);
     }
     else if (decelerationStartOffset > 0) {
         // Deceleration started before reaching the header 'rubber band' area; hide the refresh control
