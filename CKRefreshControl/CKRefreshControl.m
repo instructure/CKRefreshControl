@@ -124,7 +124,7 @@ typedef enum {
     
     textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     textLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    textLabel.textAlignment = UITextAlignmentCenter;
+    textLabel.textAlignment = NSTextAlignmentCenter;
     textLabel.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
     textLabel.backgroundColor = [UIColor clearColor];
     textLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
