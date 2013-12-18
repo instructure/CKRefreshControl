@@ -325,10 +325,14 @@ static void *contentOffsetObservingKey = &contentOffsetObservingKey;
     
     // Transition to the next state
     if (self.refreshControlState == CKRefreshControlStateRefreshing) {
+      if (scrollview.contentOffset.y < -originalTopContentInset) {
         // Adjust inset to make sure potential header view is shown correctly if user pulls down scroll view while in refreshing state
         CGFloat offset = MAX(scrollview.contentOffset.y * -1, 0);
-		offset = MIN(offset, self.bounds.size.height);
-		scrollview.contentInset = UIEdgeInsetsMake(offset, 0.0f, 0.0f, 0.0f);
+        offset = MIN(offset, self.bounds.size.height);
+        scrollview.contentInset = UIEdgeInsetsMake(offset, 0.0f, 0.0f, 0.0f);
+      } else {
+        scrollview.contentInset = UIEdgeInsetsMake(originalTopContentInset, 0.0f, 0.0f, 0.0f);
+      }
     }
     else if (decelerationStartOffset > 0) {
         // Deceleration started before reaching the header 'rubber band' area; hide the refresh control
