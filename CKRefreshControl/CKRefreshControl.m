@@ -492,6 +492,7 @@ static void CKRefreshControl_UITableViewController_SetView(UITableViewController
               "L0: popl %0\n"
               "leal L_OBJC_CLASS_UIRefreshControl-L0(%0), %1" : "=r"(pc), "=r"(UIRefreshControlClassRef)
               );
+#elif TARGET_CPU_ARM64
 #else
 #error Unsupported CPU
 #endif
